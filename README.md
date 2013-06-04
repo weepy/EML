@@ -6,7 +6,7 @@ EaselJS Markup Language
 
 Show me the code
 ----------------
-
+```
   <stage id="stage" width="960" height="400">
     <circle id="c1" x=10 y=10 fill=green></circle>
     <circle id="c2" x=50 y=50 radius=10 fill=black></circle>
@@ -18,9 +18,7 @@ Show me the code
     var stage = EML( '#stage' )
     stage.update()
   </script>
-
-
-![Screeny](http://d.pr/i/UhAE "Screeny")
+```
 
 
 Example
