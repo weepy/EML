@@ -30,7 +30,7 @@ Future
 ------
 
 * use stage.$ 
-  * as a proxy to the DOM that's shadowing the easeljs
-  * or build a simple index
+  * as a proxy to the DOM that's shadowing the easeljs --- DONE
+  * or build a simple index 
 
 * remove jquery dependency

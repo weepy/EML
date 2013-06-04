@@ -1,14 +1,23 @@
+(function()  {
+
+var $ = window.jQuery
+
 function EML(x, parent) {
   var node = $(x)[0]
   var attr = {}  
   var a = node.attributes
   for(var i=0; i<a.length; i++) {
     var name = a[i].name
+    var val = a[i].value
+      
+    // replace integer values
+    var nval = parseFloat(val)
+    if(!isNaN(nval)) val = nval
 
     // hack to rename scalex to scaleX
     if(name.length > 1)
       name = name.replace(/x$/,'X').replace(/y$/,'Y')
-    attr[name] = a[i].value
+    attr[name] = val
   }
     
 
@@ -29,6 +38,7 @@ function EML(x, parent) {
       EML(this, obj)
     })
 
+  node.easel = obj
   return obj
 }
 
@@ -68,10 +78,20 @@ EML.classes = {
     var canvas = $('<canvas>')
     canvas.insertAfter(o.node)
     o.node.style.display = 'none'
-    delete o.node
+    
     canvas.attr( o )
 
     var stage = new createjs.Stage(canvas[0])
+
+    stage.node = o.node
+
+    stage.$ = function(x) {
+      return $(stage.node).find(x).map(function() {
+        return this.easel
+      })
+    }
+
+    delete o.node
     return stage
   },
 
@@ -92,7 +112,12 @@ EML.classes = {
     initialize: function() {
       this.graphics.beginFill(this.fill).drawCircle(this.x, this.y, this.radius)
     }
-  })
+  }),
+
+  container: EML.object(createjs.Container),
+  c: EML.object(createjs.Container)
 }
 
 
+window.EML = EML
+})()
