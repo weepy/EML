@@ -13,7 +13,6 @@ function EML(x, parent) {
     
 
   attr.node = node
-  attr.innerHTML = node.innerHTML
 
   var tag = node.tagName.toLowerCase()
   var klass = EML.classes[tag]
@@ -80,7 +79,7 @@ EML.classes = {
     font: '20px Arial',
     color: 'black',
     initialize: function() {
-      this.text = new createjs.Text(this.innerHTML, this.font, this.color);
+      this.text = new createjs.Text(this.node.innerHTML, this.font, this.color);
       this.addChild(this.text)
     }
   }),
