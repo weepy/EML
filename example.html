@@ -8,13 +8,67 @@
     <circle id="c1" x=10 y=10 fill=green></circle>
     <circle id="c2" x=50 y=50 radius=10 fill=black></circle>
   </container>
-  <text x=100 y=100 color=red scaleX=2>hello</text>
+  <label x=100 y=100 color=red scaleX=2 text=hello></label>
+
+  <shape fill='#0f0' path='f (fill) mt 0 0 lt 30 0 lt 20 20 cp'></shape>
+
+  <myshape x=50 y=50></myshape>
+  <myshape x=50 y=20 stroke-width=2 rotation=120></myshape>
+
+  <star x=20 y=20 sides=6>
+
+  </star>
 </stage>
 
 
 <script>
-  var stage = EML( '#stage' )
-  
-  stage.$('container')[0].x = 10
-  stage.update()
+
+// extend the shape class to create myshape
+EML.objects.myshape = EML.objects.shape.extend({
+  path: 's (stroke) ss (strokeWidth) f (fill) mt 0 0 lt 30 0 lt 20 30 cp',
+  stroke: 'white',
+  strokeWidth: 10,
+  fill: 'red'
+})
+
+var stage = EML( '#stage' )
+
+
+var x = 0
+var $ = EML.query(stage)
+
+$('label')
+  .on('mousedown', function(event) {
+    $(this).attr({color: 'blue'})
+
+    event.on('mouseup', function() {
+      $(this).attr({color: 'green'})        
+    })
+  })
+
+$('star')
+  .on('mousedown', function(event) {
+    $(this).attr({fill: 'blue'})
+
+
+    event.on('mouseup', function() {
+      $(this).attr({fill: 'red'})        
+    })
+  })
+
+$('shape')
+  .on('mousedown', function(e) {
+    $(this).attr({fill: 'black'})
+  })
+
+x = 0
+EML.ontick(function(e) {
+  x+=1
+  $('shape').attr({x: x})
+  $('star').attr({sides: x%8 + 3, pointy: (x%10+3)/13 })
+  $('label')
+    .attr({text: Math.random().toFixed(2) })
+})
+
+
 </script>
